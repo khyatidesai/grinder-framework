@@ -1,21 +1,24 @@
 # Run TestScript1 in 50% of threads, TestScript2 in 25% of threads,
 # and TestScript3 in 25% of threads.
- 
-from net.grinder.script.Grinder import grinder
+
 import os
+from net.grinder.script.Grinder import grinder
+
 
 def getFiles():
-  size=0
-  os.chdir("/home/khyati/Grinder311Scripts")
-  print os.listdir("/home/khyati/Grinder311Scripts")
-  #for files in os.listdir("/home/khyati/Grinder/NewScripts"):
-  #  print files
-  #  if files.endswith(".py"):
-  #  print files
-  #  scripts[size]=files
-  # size=size+1
-  return os.listdir("/home/khyati/Grinder311Scripts")
+  os.chdir("")
+  names=[]
+  print os.listdir("")
+  for files in os.listdir(""):
+   print files
+   if files.endswith(".py"):
+    if files != "ParallelTest.py":
+      print files
+      names.append(files)
+  print names
+  return names
   
+
 #scripts = ["TestScript1", "TestScript2", "TestScript3"]
 
 scripts = getFiles()
@@ -32,19 +35,17 @@ for script in scripts:
 def createTestRunner(script):
     print "craete Teats Runner "
     print script
+    script=script+".py"
     exec("x = %s.TestRunner()" % script)
     return x
  
 class TestRunner:
     def __init__(self):
         tid = grinder.threadNumber
- 
-        if tid % 4 == 2:
-            self.testRunner = createTestRunner(scripts[1])
-        elif tid % 4 == 3:
-            self.testRunner = createTestRunner(scripts[2])
-        else:
-            self.testRunner = createTestRunner(scripts[0])
+        
+	for script in scripts:
+           self.testRunner = createTestRunner(script)
+        
  
     # This method is called for every run.
     def __call__(self):
