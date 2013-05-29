@@ -14,7 +14,7 @@ def getFiles():
    if files.endswith(".py"):
     if files != "ParallelTest.py":
       print files
-      names.append(files)
+      names.append(os.path.splitext(os.path.basename(files))[0])
   print names
   return names
   
@@ -24,18 +24,12 @@ def getFiles():
 scripts = getFiles()
 
 # Ensure modules are initialised in the process thread.
-for script in scripts: 
-   if script.endswith(".py"):
-    print script
-    print os.path.splitext(os.path.basename(script))[0]
-    script=os.path.splitext(os.path.basename(script))[0]
-    exec("import %s" % script)
+for script in scripts: exec("import %s" % script)
 
  
 def createTestRunner(script):
-    print "craete Teats Runner "
+    print "create TestRunner "
     print script
-    script=script+".py"
     exec("x = %s.TestRunner()" % script)
     return x
  
