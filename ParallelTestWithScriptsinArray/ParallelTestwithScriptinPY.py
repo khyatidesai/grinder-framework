@@ -1,11 +1,13 @@
 from net.grinder.script.Grinder import grinder
 
-scripts = ["TaskCreationPostgresAries","TaskCreationMySQL", "TaskCreationRamanujan"]
+#Specify name of the scripts here.
+scripts = ["login", "test", "login"]
 
 # Ensure modules are initialised in the process thread.
 for script in scripts: exec("import %s" % script)
  
 def createTestRunner(script):
+    print script
     exec("x = %s.TestRunner()" % script)
     return x
  
@@ -23,3 +25,4 @@ class TestRunner:
     # This method is called for every run.
     def __call__(self):
         self.testRunner()
+

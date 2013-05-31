@@ -19,8 +19,6 @@ def getFiles():
   return names
   
 
-#scripts = ["TestScript1", "TestScript2", "TestScript3"]
-
 scripts = getFiles()
 
 # Ensure modules are initialised in the process thread.
@@ -28,8 +26,7 @@ for script in scripts: exec("import %s" % script)
 
  
 def createTestRunner(script):
-    print "create TestRunner "
-    print script
+    print "Executing %s " % script  
     exec("x = %s.TestRunner()" % script)
     return x
  
@@ -37,11 +34,11 @@ class TestRunner:
     def __init__(self):
         tid = grinder.threadNumber
         
-	for script in scripts:
-           self.testRunner = createTestRunner(script)
-        
+	scriptname = scripts[tid % len(scripts)]
+	self.testRunner = createTestRunner(scriptname)
+
  
     # This method is called for every run.
     def __call__(self):
         self.testRunner()
- 
+
